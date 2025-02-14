@@ -1,2 +1,4 @@
-strumandbeatproject.netlify.app
+https://strumandbeatproject.netlify.app/
+
+
 
