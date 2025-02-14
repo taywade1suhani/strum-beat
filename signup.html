@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in || Sign up from</title>
+    <!-- font awesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+
+    <!-- css stylesheet -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+      * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        background: #f6f5f7;
+        display: grid;
+        width: 100%;
+        overflow-x: hidden;
+        place-content: center;
+        font-family: "Poppins", sans-serif;
+        padding-top: var(--navbar-height);
+      }
+      .container {
+        position: relative;
+        margin-top: 300px;
+        width: 850px;
+        height: 500px;
+        background-color: #a54141;
+        box-shadow: 25px 30px 55px #5557;
+        border-radius: 13px;
+        overflow: hidden;
+        margin-top: calc(
+          var(--navbar-height) + 20px
+        ); /* Adjust 20px if needed */
+      }
+      .form-container {
+        position: absolute;
+        width: 60%;
+        height: 100%;
+        padding: 0px 40px;
+        transition: all 0.6s ease-in-out;
+      }
+      .sign-up-container {
+        opacity: 0;
+        z-index: 1;
+      }
+      .sign-in-container {
+        z-index: 2;
+      }
+      form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 50px;
+      }
+      h1 {
+        color: var(--grad-clr1);
+      }
+      .social-container {
+        margin: 20px 0px;
+      }
+      .social-container a {
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px 5px;
+        height: 40px;
+        width: 40px;
+      }
+      span {
+        font-size: 12px;
+        color: white;
+      }
+      .infield {
+        position: relative;
+        margin: 8px 0px;
+        width: 100%;
+      }
+      input {
+        width: 100%;
+        padding: 12px 15px;
+        background-color: #f3f3f3;
+        border: none;
+        outline: none;
+      }
+      label {
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        width: 0%;
+        height: 2px;
+        background: var(--linear-grad);
+        transition: 0.3s;
+      }
+      input:focus ~ label {
+        width: 100%;
+      }
+      a {
+        color: #ffffff;
+        font-size: 14px;
+        text-decoration: none;
+        margin: 15px 0px;
+      }
+      a.forgot {
+        padding-bottom: 3px;
+        border-bottom: 2px solid #eee;
+      }
+      button {
+        border: 1px solid var(--grad-clr1);
+        border-radius: 10px;
+        background: var(--grad-clr2);
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 12px 45px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .form-container button {
+        margin-top: 17px;
+        transition: 80ms ease-in;
+      }
+      .form-container button:hover {
+        background: #7b3737;
+
+        color: var(--grad-clr1);
+      }
+      .overlay-container button {
+      }
+      .overlay-container {
+        position: absolute;
+        top: 0;
+        left: 60%;
+        width: 40%;
+        height: 100%;
+        overflow: hidden;
+        transition: transform 0.6s ease-in-out;
+        z-index: 9;
+      }
+      #overlayBtn {
+        cursor: pointer;
+        position: absolute;
+        left: 50%;
+        top: 304px;
+        transform: translateX(-50%);
+        width: 143.67px;
+        height: 40px;
+        border: 1px solid #fff;
+        background: transparent;
+        border-radius: 10px;
+      }
+      .overlay {
+        position: absolute;
+        background: var(--linear-grad);
+        color: #fff;
+        left: -150%;
+        height: 100%;
+        width: 250%;
+        transition: transform 0.6s ease-in-out;
+      }
+      .overlay-panel {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0px 40px;
+        text-align: center;
+        height: 100%;
+        width: 340px;
+        transition: 0.6s ease-in;
+      }
+      .overlay-left {
+        right: 60%;
+        transform: translateX(-12%);
+      }
+      .overlay-right {
+        right: 0;
+        transform: translateX(0%);
+      }
+      .overlay-panel h1 {
+        color: #fff;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 20px;
+        letter-spacing: 0.5px;
+        margin: 25px 0px 35px;
+      }
+      .overlay-panel button {
+        border: none;
+        background-color: transparent;
+      }
+      .right-panel-active .overlay-container {
+        transform: translateX(-150%);
+      }
+      .right-panel-active .overlay {
+        transform: translateX(50%);
+      }
+      .right-panel-active .overlay-left {
+        transform: translateX(25%);
+      }
+      .right-panel-active .overlay-right {
+        transform: translateX(35%);
+      }
+      .right-panel-active .sign-in-container {
+        transform: translateX(20%);
+        opacity: 0;
+      }
+      .right-panel-active .sign-up-container {
+        transform: translateX(66.7%);
+        opacity: 1;
+        z-index: 5;
+        animation: show 0.6s;
+      }
+      @keyframes show {
+        0%,
+        50% {
+          opacity: 0;
+          z-index: 1;
+        }
+        50.1%,
+        100% {
+          opacity: 1;
+          z-index: 5;
+        }
+      }
+      .btnScaled {
+        animation: scaleBtn 0.6s;
+      }
+      @keyframes scaleBtn {
+        0% {
+          width: 143.67px;
+        }
+        50% {
+          width: 250px;
+        }
+        100% {
+          width: 143.67px;
+        }
+      }
+
+      :root {
+        --white-color: hsl(0, 0%, 100%);
+        --black-color: hsl(0, 0%, 0%);
+        --brown-color: #5d4037;
+        --light-brown-color: #8d6e63;
+        --dark-brown-color: #3e2723;
+        --body-font: "Montserrat Alternates", sans-serif;
+        --h1-font-size: 1.5rem;
+        --normal-font-size: 0.938rem;
+        --font-regular: 400;
+        --linear-grad: linear-gradient(to right, #6b3232, #7c3e3e);
+        --grad-clr1: #ffffff;
+        --grad-clr2: #a54141;
+        --font-medium: 500;
+      }
+
+      .navbar .logo {
+        width: 150px; /* Adjust as needed */
+        height: auto; /* Keeps aspect ratio */
+        max-height: 80px; /* Ensures it doesn't exceed navbar height */
+        object-fit: contain; /* Keeps it within bounds */
+      }
+
+      .navbar {
+        padding: 1rem;
+        background-color: #a54141;
+        border: none;
+      }
+
+      .navbar-toggler-icon {
+        background-color: var(--white-color) !important;
+      }
+
+      .navbar-toggler-icon:hover {
+        background-color: var(--light-brown-color);
+      }
+
+      .navbar-nav .nav-link {
+        color: var(--white-color);
+        font-weight: 500;
+        display: inline-block;
+        position: relative;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background-color: var(--white-color);
+        transition: width 0.3s ease-out;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: rgb(228, 219, 219);
+        animation: bounce 0.4s ease-in-out;
+      }
+
+      .navbar-nav .nav-link:hover::after {
+        width: 100%;
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .navbar-nav .nav-link i {
+        font-size: 1.2rem;
+        margin-right: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
+      .navbar-nav .nav-link:hover i {
+        opacity: 1;
+        transform: translateX(5px);
+      }
+
+      /* Cart & Profile Icons */
+      .nav-icon {
+        font-size: 1.5rem;
+        color: var(--white-color);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .nav-icon:hover {
+        transform: scale(1.1);
+        color: var(--light-brown-color);
+      }
+
+      @media screen and (min-width: 992px) {
+        .navbar .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .navbar-nav {
+          margin-right: auto;
+        }
+
+        .d-flex {
+          order: 2;
+          margin-left: auto;
+        }
+
+        .nav-icon {
+          order: 1;
+        }
+      }
+      /* Footer */
+      .footer {
+        background-color: #a54141;
+        color: white;
+        margin-top: 50px;
+      }
+
+      .footer .logo {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .footer a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        color: #d7ccc8; /* Light Brown */
+        text-decoration: underline;
+      }
+
+      .social-icons a {
+        color: white;
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .social-icons a:hover {
+        color: #d7ccc8;
+      }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- form -->
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Create Account</h1>
+          <div class="social-container">
+            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <span>or use your email for registration</span>
+          <div class="infield">
+            <input type="text" placeholder="Name" />
+            <label></label>
+          </div>
+          <div class="infield">
+            <input type="email" placeholder="Email" name="email" />
+            <label></label>
+          </div>
+          <div class="infield">
+            <input type="password" placeholder="Password" />
+            <label></label>
+          </div>
+          <button><a href="index.html">Sign Up</a></button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>Sign in</h1>
+          <div class="social-container">
+            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <span>or use your account</span>
+          <div class="infield">
+            <input type="email" placeholder="Email" name="email" />
+            <label></label>
+          </div>
+          <div class="infield">
+            <input type="password" placeholder="Password" />
+            <label></label>
+          </div>
+          <a href="#" class="forgot">Forgot your password?</a>
+          <button><a href="/index.html">Sign In</a></button>
+        </form>
+      </div>
+      <div class="overlay-container" id="overlayCon">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="mb-5">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button>Sign Up</button>
+          </div>
+        </div>
+        <button id="overlayBtn"></button>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- js code -->
+    <script>
+      const container = document.getElementById("container");
+      const overlayCon = document.getElementById("overlayCon");
+      const overlayBtn = document.getElementById("overlayBtn");
+
+      overlayBtn.addEventListener("click", () => {
+        container.classList.toggle("right-panel-active");
+
+        overlayBtn.classList.remove("btnScaled");
+        window.requestAnimationFrame(() => {
+          overlayBtn.classList.add("btnScaled");
+        });
+      });
+    </script>
+  </body>
+</html>

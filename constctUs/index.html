@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- navbar -->
+    <header class="header fixed-top">
+      <nav class="navbar navbar-expand-lg container-fluid">
+        <a class="navbar-brand" href="/index.html"
+          ><img src="/assets/logonew.png" alt="Strums & Beats Logo" class="logo"
+        /></a>
+
+        <div class="d-flex ms-auto align-items-center">
+          <a href="#" id="cart-toggle" class="nav-icon me-3"
+            ><i class="ri-shopping-cart-line"></i
+          ></a>
+          <a href="/signup.html" id="login-toggle" class="nav-icon"
+            ><i class="ri-user-line"></i
+          ></a>
+
+          <button
+            class="navbar-toggler ms-3"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"
+                ><i class="ri-arrow-right-up-line"></i> Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/aboutUs/aboutus.html"
+                ><i class="ri-arrow-right-up-line"></i> About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Shop/shop.html"
+                ><i class="ri-arrow-right-up-line"></i>Instruments</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="ri-arrow-right-up-line"></i> Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- section 2 -->
+    <section id="contact">
+      <div class="contact-container">
+        <div class="contact-content">
+          <div class="contact-text">
+            <h2>Contact Us</h2>
+            <p>
+              Explore the world of music with us! From the strings of a guitar
+              to the vibrant sounds of a trumpet, we celebrate all instruments.
+              Whether you're a seasoned musician or just starting your musical
+              journey, we'd love to connect.
+            </p>
+            <p>
+              Have questions about our instruments, lessons, or anything
+              music-related? Reach out, and our team will be happy to assist
+              you.
+            </p>
+          </div>
+        </div>
+        <div class="contact-info">
+          <p>Contact Us</p>
+          <h1>Let's Get In Touch</h1>
+          <div class="info-details">
+            <div>
+              <i class="fas fa-envelope"></i>
+              <p>info@musicinstruments.com</p>
+            </div>
+            <div>
+              <i class="fas fa-map-marker-alt"></i>
+              <p>123 Main Street, Anytown, CA 91234</p>
+            </div>
+            <div>
+              <i class="fas fa-phone"></i>
+              <p>(555) 123-4567</p>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+          <form id="contact-form">
+            <h3>Send us a message</h3>
+            <input type="text" id="name" placeholder="Your Name" required />
+            <input type="email" id="email" placeholder="Your Email" required />
+            <textarea
+              id="message"
+              placeholder="Your Message"
+              required
+            ></textarea>
+            <button type="submit">Send Message</button><br />
+          </form>
+        </div>
+        <!-- continue -->
+        <div class="continue">
+          <a href="/index.html">Continue Shopping...</a>
+        </div>
+
+        <!-- Contact Us Section by areeb-->
+        <section
+          class="contact"
+          class="contact-section py-5"
+          data-aos="fade-up"
+        >
+          <div class="container">
+            <div class="section-header text-center mb-5">
+              <h2 class="display-4 mt-5" style="color: #a54141">
+                Our Location
+              </h2>
+              <p class="lead text-white fw-bold">
+                Find our exact location on the map below!
+              </p>
+            </div>
+
+            <div class="row justify-content-center">
+              <!-- Contact Map -->
+              <div class="col-lg-10 col-md-9 col-sm-12 mt-4 mt-lg-0">
+                <div class="contact-map rounded shadow">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=..."
+                    frameborder="0"
+                    style="border: 0; width: 100%; height: 100%"
+                    allowfullscreen=""
+                    loading="lazy"
+                  >
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <div id="myPopup" class="popup">
+      <img src="/constctUs/green-checkbox-icon-16.jpg" alt="Success Icon" />
+      <p>Thank you for your message!</p>
+      <button onclick="closePopup()">OK</button>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer" data-aos="fade-up">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-md-3 text-white">
+            <h4 class="nav__logo">STRUMS & BEATS</h4>
+            <p class="mt-2">&copy; 2025 strumsnbeats.com</p>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="/index.html">Home</a></li>
+              <li><a href="/aboutUs/aboutus.html">About</a></li>
+              <li><a href="#">Categories</a></li>
+              <li><a href="/constctUs/index.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <h6 class="text-white">Contact</h6>
+            <p>
+              Email:
+              <a href="mailto:book@hoasenconcert.com"
+                >musical@strumsnbeats.com</a
+              >
+            </p>
+            <p>Phone: +91 123 456 7890</p>
+            <h6 class="text-white mt-3">Careers</h6>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Policies</h6>
+            <ul class="list-unstyled">
+              <li><a href="/policies.html">Terms of Service</a></li>
+              <li><a href="/policies.html">Privacy Policy</a></li>
+              <li><a href="/policies.html">Payment Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Company</h6>
+            <p>Strums & Beats</p>
+            <p>Delhi,India</p>
+            <div class="social-icons">
+              <a href="https://www.tiktok.com/login"><i class="fab fa-tiktok"></i></a>
+              <a href="https://www.instagram.com/accounts/login"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/login"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.messenger.com/login"><i class="fab fa-facebook-messenger"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- script -->
+
+    <!-- scripts -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/ef16e28e86.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      AOS.init({
+        duration: 1200,
+        easing: "ease-in-out",
+        once: true,
+      });
+    </script>
+
+    <script>
+      const form = document.getElementById("contact-form");
+      const popup = document.getElementById("myPopup");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        popup.style.display = "block";
+        form.reset();
+      });
+      function closePopup() {
+        popup.style.display = "none";
+      }
+
+      window.addEventListener("click", function (event) {
+        if (event.target == popup) {
+          closePopup();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="" />
+    <style>
+      .category {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        color: #a54141;
+      }
+      .category div {
+        font-weight: bold;
+      }
+      .product-section {
+        margin: 20px 0;
+      }
+      .cart-icon {
+        position: fixed;
+        top: 150px;
+        right: 20px;
+        width: 50px; /* Fixed width */
+        height: 50px; /* Fixed height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1001; /* Ensure it's above the cart section */
+      }
+      .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: red;
+        color: black;
+        border-radius: 50%;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .cart-section {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        background: white;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 1050;
+      }
+      .cart-section.active {
+        right: 0;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 999;
+      }
+      .overlay.active {
+        display: block;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
+
+      :root {
+        --white-color: hsl(0, 0%, 100%);
+        --black-color: hsl(0, 0%, 0%);
+        --brown-color: #5d4037;
+        --light-brown-color: #8d6e63;
+        --dark-brown-color: #3e2723;
+        --body-font: "Montserrat Alternates", sans-serif;
+        --h1-font-size: 1.5rem;
+        --normal-font-size: 0.938rem;
+        --font-regular: 400;
+        --font-medium: 500;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--body-font);
+        background-color: var(--white-color);
+        font-size: var(--normal-font-size);
+        color: var(--dark-brown-color);
+      }
+      .navbar .logo {
+        width: 120px;
+        height: 80px;
+      }
+
+      .navbar {
+        padding: 1rem;
+        background-color: #a54141;
+        border: none;
+      }
+
+      .navbar-toggler-icon {
+        background-color: var(--white-color) !important;
+      }
+
+      .navbar-toggler-icon:hover {
+        background-color: var(--light-brown-color) !important;
+      }
+
+      .navbar-nav .nav-link {
+        color: var(--white-color);
+        font-weight: 500;
+        display: inline-block;
+        position: relative;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background-color: var(--white-color);
+        transition: width 0.3s ease-out;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: black;
+        animation: bounce 0.4s ease-in-out;
+      }
+
+      .navbar-nav .nav-link:hover::after {
+        width: 100%;
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .navbar-nav .nav-link i {
+        font-size: 1.2rem;
+        margin-right: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
+      .navbar-nav .nav-link:hover i {
+        opacity: 1;
+        transform: translateX(5px);
+      }
+
+      /* Cart & Profile Icons */
+      .nav-icon {
+        font-size: 1.5rem;
+        color: var(--white-color);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .nav-icon:hover {
+        transform: scale(1.1);
+        color: var(--light-brown-color);
+      }
+
+      @media screen and (min-width: 992px) {
+        .navbar .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .navbar-nav {
+          margin-right: auto;
+        }
+
+        .d-flex {
+          order: 2;
+          margin-left: auto;
+        }
+
+        .nav-icon {
+          order: 1;
+        }
+      }
+      /* Footer */
+      .footer {
+        background-color: #a54141;
+        color: white;
+      }
+
+      .footer .logo {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .footer a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        color: #d7ccc8; /* Light Brown */
+        text-decoration: underline;
+      }
+
+      .social-icons a {
+        color: white;
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .social-icons a:hover {
+        color: #d7ccc8;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- navbar -->
+    <header class="header fixed-top">
+      <nav class="navbar navbar-expand-lg container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img src="/Shop/logonew.png" alt="Strums & Beats Logo" class="logo"
+        /></a>
+
+        <div class="d-flex ms-auto align-items-center">
+          <a href="#" id="cart-toggle" class="nav-icon me-3"
+            ><i class="ri-shopping-cart-line"></i
+          ></a>
+          <a href="/signup.html" id="login-toggle" class="nav-icon"
+            ><i class="ri-user-line"></i
+          ></a>
+
+          <button
+            class="navbar-toggler ms-3"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"
+                ><i class="ri-arrow-right-up-line"></i> Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/aboutUs/aboutus.html"
+                ><i class="ri-arrow-right-up-line"></i> About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="ri-arrow-right-up-line"></i>Categories</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/constctUs/index.html"
+                ><i class="ri-arrow-right-up-line"></i> Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!--  category-->
+    <div class="container" style="margin-top: 200px">
+      <h2 class="text-center" style="color: #a54141">Categories</h2>
+      <div class="category">
+        <div onclick="scrollToSection('guitar')">Guitar</div>
+        <div onclick="scrollToSection('violin')">Violin</div>
+        <div onclick="scrollToSection('drum')">Drum/Percussion</div>
+        <div onclick="scrollToSection('piano')">Piano</div>
+        <div onclick="scrollToSection('brass')">Brass & Woodwind</div>
+        <div onclick="scrollToSection('flute')">Flute</div>
+      </div>
+
+      <div class="cart-icon" onclick="toggleCart()">
+        🛒 Cart
+        <span id="cart-badge" class="cart-badge" style="display: none">0</span>
+      </div>
+
+      <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+      <div id="cart-section" class="cart-section">
+        <h5>Cart</h5>
+        <ul id="cart-items"></ul>
+        <p>Total: $<span id="total">0</span></p>
+        <button class="btn btn-secondary" onclick="toggleCart()">Close</button>
+        <button
+          class="btn btn-primary"
+          onclick="window.location.href='Checkout.html'"
+        >
+          Go to Payment
+        </button>
+      </div>
+
+      <div id="guitar" class="product-section">
+        <h3>Guitar</h3>
+        <div class="row" id="guitar-products"></div>
+      </div>
+      <div id="violin" class="product-section">
+        <h3>Violin</h3>
+        <div class="row" id="violin-products"></div>
+      </div>
+      <div id="drum" class="product-section">
+        <h3>Drum/Percussion</h3>
+        <div class="row" id="drum-products"></div>
+      </div>
+      <div id="piano" class="product-section">
+        <h3>Piano</h3>
+        <div class="row" id="piano-products"></div>
+      </div>
+      <div id="brass" class="product-section">
+        <h3>Brass & Woodwind</h3>
+        <div class="row" id="brass-products"></div>
+      </div>
+      <div id="flute" class="product-section">
+        <h3>Flute</h3>
+        <div class="row" id="flute-products"></div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer" data-aos="fade-up">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-md-3 text-white">
+            <h4 class="nav__logo">STRUM & BEAT</h4>
+            <p class="mt-2">&copy; 2025 strumsnbeats.com</p>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#">Instruments</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <h6 class="text-white">Contact</h6>
+            <p>
+              Email:
+              <a href="mailto:book@hoasenconcert.com"
+                >musical@strumsnbeats.com</a
+              >
+            </p>
+            <p>Phone: +91 123 456 7890</p>
+            <h6 class="text-white mt-3">Careers</h6>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Policies</h6>
+            <ul class="list-unstyled">
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Payment Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-2">
+            <h6 class="text-white">Company</h6>
+            <p>Strums & Beats</p>
+            <p>Delhi,India</p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-tiktok"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-facebook-messenger"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- scripts -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/ef16e28e86.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      AOS.init({
+        duration: 1200,
+        easing: "ease-in-out",
+        once: true,
+      });
+    </script>
+
+    <!-- scriptof add to cart -->
+    <script>
+      // Define product names and prices
+      const products = {
+        guitar: [
+          { name: "Acoustic Guitar", price: 120 },
+          { name: "Electric Guitar", price: 200 },
+          { name: "Bass Guitar", price: 180 },
+          { name: "Classical Guitar", price: 150 },
+          { name: "Parlor Guitar", price: 140 },
+          { name: "Fretless Guitar", price: 100 },
+          { name: "Silent Guitar", price: 150 },
+          { name: "Archtop Guitar", price: 130 },
+        ],
+        violin: [
+          { name: "Beginner Violin", price: 90 },
+          { name: "Studio Violin", price: 140 },
+          { name: "Classic Violin", price: 220 },
+          { name: "Concert Violin", price: 80 },
+          { name: "Soloist Violin", price: 100 },
+          { name: "Virtuoso Violin", price: 120 },
+        ],
+        drum: [
+          { name: "Snare Drum", price: 80 },
+          { name: "Bass Drum", price: 180 },
+          { name: "Echo Drum", price: 300 },
+          { name: "Thunder Drum", price: 80 },
+          { name: "Rhythm Drum", price: 180 },
+          { name: "Groove Drum", price: 300 },
+        ],
+        piano: [
+          { name: "Digital Piano", price: 500 },
+          { name: "Classic Keys", price: 1500 },
+          { name: "Echo Piano", price: 500 },
+          { name: "Soft Touch", price: 1500 },
+          { name: "Melody Piano", price: 500 },
+          { name: "Grand Piano", price: 1500 },
+        ],
+        brass: [
+          { name: "Trumpet", price: 250 },
+          { name: "Trombone", price: 280 },
+          { name: "Brass Horn", price: 250 },
+          { name: "Melody Tuba", price: 280 },
+          { name: "Echo Cornet", price: 250 },
+          { name: "Harmony Euphonium", price: 280 },
+        ],
+        flute: [
+          { name: "Silver Flute", price: 180 },
+          { name: "Echo Flute", price: 120 },
+          { name: "Harmony Flute", price: 180 },
+          { name: "Breeze Flute", price: 120 },
+          { name: "Melody Flute", price: 180 },
+          { name: "Crystal Flute", price: 120 },
+        ],
+      };
+
+      function scrollToSection(sectionId) {
+        document
+          .getElementById(sectionId)
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function toggleCart() {
+        document.getElementById("cart-section").classList.toggle("active");
+        document.getElementById("overlay").classList.toggle("active");
+      }
+
+      function generateProducts(category) {
+        let container = document.getElementById(`${category}-products`);
+        container.innerHTML = ""; // Clear previous content
+
+        products[category].forEach((product, index) => {
+          container.innerHTML += `
+                        <div class="col-md-3">
+                            <div class="card p-2 text-center">
+                                <img src="images/${category}${
+            index + 1
+          }.jpg" class="card-img-top" alt="${product.name}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">Price: $${
+                                      product.price
+                                    }</p>
+                                    <button class="btn" style="background-color: #a54141; color: white;" 
+                                        onclick="addToCart('${product.name}', ${
+            product.price
+          }, 'images/${category}${index + 1}.jpg')">Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+        });
+      }
+
+      Object.keys(products).forEach((category) => generateProducts(category));
+
+      let cart = {};
+
+      function addToCart(item, price, image) {
+        if (cart[item]) {
+          cart[item].quantity++;
+        } else {
+          cart[item] = { price, quantity: 1, image };
+        }
+        updateCart();
+      }
+
+      function removeFromCart(item) {
+        delete cart[item];
+        updateCart();
+      }
+
+      function updateCart() {
+        let cartItems = document.getElementById("cart-items");
+        let total = 0;
+        let itemCount = 0;
+        cartItems.innerHTML = "";
+        for (let item in cart) {
+          total += cart[item].price * cart[item].quantity;
+          itemCount += cart[item].quantity;
+          cartItems.innerHTML += `
+                        <li>
+                            ${item} - $${cart[item].price} x ${cart[item].quantity} 
+                            <button class="btn btn-sm" onclick="removeFromCart('${item}')">❌</button>
+                        </li>`;
+        }
+        document.getElementById("total").textContent = total;
+        document.getElementById("cart-badge").textContent = itemCount;
+        document.getElementById("cart-badge").style.display =
+          itemCount > 0 ? "inline" : "none";
+      }
+
+      let lastScrollTop = 0;
+      const cartIcon = document.querySelector(".cart-icon");
+
+      window.addEventListener("scroll", function () {
+        let scrollTop = window.scrollY;
+
+        if (scrollTop > lastScrollTop) {
+          // Scrolling Down -> Hide Cart Icon
+          cartIcon.style.opacity = "0";
+          cartIcon.style.pointerEvents = "none";
+        } else {
+          // Scrolling Up -> Show Cart Icon
+          cartIcon.style.opacity = "1";
+          cartIcon.style.pointerEvents = "auto";
+        }
+
+        lastScrollTop = scrollTop;
+      });
+    </script>
+  </body>
+</html>
